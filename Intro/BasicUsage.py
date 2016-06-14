@@ -120,8 +120,18 @@ def feeds():
     # output should be [array([ 14.], dtype=float32)]
     return
 
-building_graph()
-interactive_session()
-fetch_tensors()
-feeds()
+
+print ("1-building tensorflow graph \n2-interactive sessions \n3-fetch tensors\n4-feeds")
+operation = raw_input("Enter the operation number: ")
+
+options = {
+    1: building_graph,
+    2: interactive_session,
+    3: fetch_tensors,
+    4: feeds
+}
+
+options[int(operation)]()
+
+
 
