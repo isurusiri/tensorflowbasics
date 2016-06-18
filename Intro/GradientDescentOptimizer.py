@@ -35,6 +35,3 @@ def dimension_separator():
 
     # Learned best fit is W: [0.1], b: [0.3]
     return
-
-
-dimension_separator()

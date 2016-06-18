@@ -121,17 +121,5 @@ def feeds():
     return
 
 
-print ("1-building tensorflow graph \n2-interactive sessions \n3-fetch tensors\n4-feeds")
-operation = raw_input("Enter the operation number: ")
-
-options = {
-    1: building_graph,
-    2: interactive_session,
-    3: fetch_tensors,
-    4: feeds
-}
-
-options[int(operation)]()
-
 
 
