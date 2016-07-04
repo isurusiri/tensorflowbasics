@@ -1,21 +1,41 @@
 import tensorflow as tf
 
-
 from tensorflow.examples.tutorials.mnist import input_data
+
+# downloads mnist data set
 mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 
+# start an interactive tensorflow session. usually tensorflow
+# calls a connection that it holds to native code as a session
+# therefore in order to execute the graph computation it is
+# necessary to make the graph in advance and the start it in a
+# tensorflow session. with interactive session it is possible to
+# add computations to graph on the fly and make necessary
+# modifications
 sess = tf.InteractiveSession()
 
+# placeholders to keep the values of input images and target output
+# classes. x will consist of a 2d tensor of floating point numbers.
+# 784 is the dimensionality of a single image and none indicates the
+# first dimension. y is also a 2d tensor where each row is a one-hot
+# 10 dimensional vector
 x = tf.placeholder(tf.float32, shape=[None, 784])
 y_ = tf.placeholder(tf.float32, shape=[None, 10])
 
+# defines weights and bias as variables since those can be modified
+# as the computation proceeds
 W = tf.Variable(tf.zeros([784,10]))
 b = tf.Variable(tf.zeros([10]))
 
+# initializes the variables before executes the graph
 sess.run(tf.initialize_all_variables())
 
+# multiply the vectorized input images x by the weight matrix W, add
+# the bias b, and compute the softmax probabilities that are assigned to each class
 y = tf.nn.softmax(tf.matmul(x,W) + b)
 
+# cost function to be minimized during training can be specified just as easily.
+# cost function will be the cross-entropy between the target and the model's prediction
 cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))
 
 train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
