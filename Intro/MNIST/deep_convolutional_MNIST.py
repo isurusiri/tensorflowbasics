@@ -38,12 +38,19 @@ y = tf.nn.softmax(tf.matmul(x,W) + b)
 # cost function will be the cross-entropy between the target and the model's prediction
 cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))
 
+# use steepest gradient descent, with a step length of 0.5, to descend the cross entropy
+# add new operations to the computation graph. These operations included ones to compute
+# gradients, compute parameter update steps, and apply update steps to the parameters
 train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
 
+# apply the gradient descent updates to the parameters
+# trains the model with train_step
 for i in range(1000):
   batch = mnist.train.next_batch(50)
   train_step.run(feed_dict={x: batch[0], y_: batch[1]})
 
+# finds the correctly predicted label. tf.argmax gives the index of the highest
+# entry in a tensor along some axis
 correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
 
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
